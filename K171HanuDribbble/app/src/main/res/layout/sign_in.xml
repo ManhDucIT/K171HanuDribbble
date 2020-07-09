@@ -36,24 +36,40 @@
         android:textStyle="bold"
         android:textColor="@android:color/black"/>
 
-    <EditText android:id="@+id/username"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/se2"
         android:layout_marginTop="46dp"
         android:hint="Username or email"
-        android:paddingHorizontal="16dp"
-        />
+        android:background="@drawable/input_box"
 
-    <EditText android:id="@+id/pass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/username"
-        android:layout_marginTop="16dp"
-        android:hint="Username or email"
-        android:paddingHorizontal="16dp"
-        android:inputType="textPassword"
-        />
+        android:layout_marginTop="8dp"
+        app:passwordToggleEnabled="true"
+        android:background="@drawable/input_box"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <EditText
+            android:id="@+id/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@color/light_gray">
+        </EditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button android:id="@+id/sign_in"
         android:layout_width="match_parent"
