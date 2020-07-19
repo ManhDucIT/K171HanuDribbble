@@ -1,5 +1,6 @@
 package com.androidtraining.k171hanudribbble;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     Button following;
     Button projects_btn;
     Toolbar toolbar;
-    ImageView share;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +37,12 @@ public class MainActivity extends AppCompatActivity {
         followers = findViewById(R.id.follwer_btn);
         following = findViewById(R.id.following_btn);
         projects_btn = findViewById(R.id.projects_btn);
+
         toolbar = findViewById(R.id.toolbar);
-        share = findViewById(R.id.shareBtn);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         followers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,14 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.show();
             }
         });
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent send = new Intent(Intent.ACTION_SEND);
-                send.setType("text/plain");
-                startActivity(send);
-            }
-        });
+
         rs = findViewById(R.id.newsfeedsHolder);
         ArrayList<NewsFeed> feeds = new ArrayList<NewsFeed>();
         feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
@@ -88,5 +87,25 @@ public class MainActivity extends AppCompatActivity {
         NewsFeedAdapter feedAdapter = new NewsFeedAdapter(feeds,this);
         rs.setLayoutManager(linearLayoutManager);
         rs.setAdapter(feedAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.btnShare:
+                Intent send = new Intent(Intent.ACTION_SEND);
+                send.setType("text/plain");
+                startActivity(send);
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,161 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.Toolbar
-            xmlns:android = "http://schemas.android.com/apk/res/android"
-            xmlns:app = "http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
             android:layout_width = "match_parent"
             android:layout_height = "?attr/actionBarSize"
             android:background="#f2f2f2"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            >
-            <ImageView
-                android:id="@+id/arrowBack"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:src="@drawable/arrow_back_24"
-                android:layout_marginLeft="10dp"
-                android:layout_centerVertical="true"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nguyễn Phúc"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="80dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"/>
-            <ImageView
-                android:id="@+id/shareBtn"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:src="@drawable/share_24"
-                android:layout_marginLeft="60dp"
-                />
-        </androidx.appcompat.widget.Toolbar>
+            app:title="Nguyễn Phúc"
+            app:titleTextColor="@android:color/black"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
     </com.google.android.material.appbar.AppBarLayout>
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
        android:background="#d8d8d8">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-        <RelativeLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="440dp"
-            android:background="#f2f2f2">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/avatar"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:src="@drawable/cou"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"/>
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/avatar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="Nguyễn Phúc"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/username"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="Ha Dong,Viet Nam"
-                android:textColor="#999999"
-                android:textSize="20sp"
-                android:textStyle="normal" />
+            android:layout_height="match_parent">
             <RelativeLayout
-                android:id="@+id/options"
+                android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_below="@id/address"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="16dp">
-                <View
-                    android:id="@+id/horizontal_divider"
-                    android:layout_width="0.2dp"
-                    android:layout_height="match_parent"
-                    android:background="#999999"
-                    android:layout_centerHorizontal="true"/>
-                <Button
-                    android:id="@+id/follwer_btn"
-                    android:layout_width="150dp"
-                    android:layout_height="32dp"
-                    android:background="@null"
-                    android:drawableLeft="@drawable/person_24"
-                    android:textSize="14sp"
-                    android:textColor="#999999"
-                    android:textAllCaps="false"
-                    android:text="@string/followersStr"
-                    android:paddingLeft="10dp"
-                    android:layout_toRightOf="@id/horizontal_divider"
+                android:layout_height="440dp"
+                android:background="#f2f2f2">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
+                android:src="@drawable/cou"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"/>
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/avatar"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    style="?android:attr/borderlessButtonStyle"/>
-                <Button
-                    android:id="@+id/following_btn"
-                    android:layout_width="150dp"
-                    android:layout_height="32dp"
-                    android:background="@null"
-                    android:drawableLeft="@drawable/person_outline_24"
-                    android:textSize="14sp"
+                    android:text="Nguyễn Phúc"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/username"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="Ha Dong,Viet Nam"
                     android:textColor="#999999"
-                    android:layout_below="@id/follwer_btn"
-                    android:textAllCaps="false"
-                    android:text="@string/followingStr"
-                    android:paddingLeft="10dp"
-                    android:layout_toRightOf="@id/horizontal_divider"
-                    android:layout_marginTop="20dp"
-                    style="?android:attr/borderlessButtonStyle"/>
-                <Button
-                    android:id="@+id/projects_btn"
-                    android:layout_width="150dp"
-                    android:layout_height="32dp"
-                    android:background="@null"
-                    android:drawableLeft="@drawable/project_ic"
-                    android:textSize="14sp"
-                    android:textColor="#999999"
-                    android:layout_below="@id/following_btn"
-                    android:textAllCaps="false"
-                    android:text="@string/projectStr"
-                    android:paddingLeft="10dp"
-                    android:layout_toRightOf="@id/horizontal_divider"
-                    android:layout_marginTop="20dp"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:textSize="20sp"
+                    android:textStyle="normal" />
+                <RelativeLayout
+                    android:id="@+id/options"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:layout_below="@id/address"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="16dp">
+                    <View
+                        android:id="@+id/horizontal_divider"
+                        android:layout_width="0.2dp"
+                        android:layout_height="match_parent"
+                        android:background="#999999"
+                        android:layout_centerHorizontal="true"/>
+                    <Button
+                        android:id="@+id/follwer_btn"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:background="@null"
+                        android:drawableLeft="@drawable/person_24"
+                        android:textSize="14sp"
+                        android:textColor="#999999"
+                        android:textAllCaps="false"
+                        android:text="@string/followersStr"
+                        android:paddingLeft="10dp"
+                        android:layout_toRightOf="@id/horizontal_divider"
+                        android:layout_marginTop="10dp"
+                        style="?android:attr/borderlessButtonStyle"/>
+                    <Button
+                        android:id="@+id/following_btn"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:background="@null"
+                        android:drawableLeft="@drawable/person_outline_24"
+                        android:textSize="14sp"
+                        android:textColor="#999999"
+                        android:layout_below="@id/follwer_btn"
+                        android:textAllCaps="false"
+                        android:text="@string/followingStr"
+                        android:paddingLeft="10dp"
+                        android:layout_toRightOf="@id/horizontal_divider"
+                        android:layout_marginTop="20dp"
+                        style="?android:attr/borderlessButtonStyle"/>
+                    <Button
+                        android:id="@+id/projects_btn"
+                        android:layout_width="150dp"
+                        android:layout_height="32dp"
+                        android:background="@null"
+                        android:drawableLeft="@drawable/project_ic"
+                        android:textSize="14sp"
+                        android:textColor="#999999"
+                        android:layout_below="@id/following_btn"
+                        android:textAllCaps="false"
+                        android:text="@string/projectStr"
+                        android:paddingLeft="10dp"
+                        android:layout_toRightOf="@id/horizontal_divider"
+                        android:layout_marginTop="20dp"
+                        style="?android:attr/borderlessButtonStyle"/>
 
 
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-        <ImageView
-            android:id="@+id/divider"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_below="@+id/header"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/apps_24"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"/>
-        <androidx.recyclerview.widget.RecyclerView
+            <ImageView
+                android:id="@+id/divider"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/header"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/apps_24"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"/>
+            <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsfeedsHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            />
+                android:nestedScrollingEnabled="false"/>
         </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
