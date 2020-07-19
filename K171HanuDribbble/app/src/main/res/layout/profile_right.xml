@@ -65,7 +65,7 @@
                 android:layout_below="@id/avatar"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="PhamDucToan"
+                android:text="Nguyễn Phúc"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
