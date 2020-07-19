@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bottomSheetContainer"
+    android:background="@drawable/lrrounded">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display option"
+        android:textSize="20sp"
+        android:textColor="#999999"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"/>
+    <ImageView
+        android:id="@+id/result_ic"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/group"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+    <TextView
+        android:id="@+id/noneFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result_ic"
+        android:text="No follower"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/noneFollower"
+        android:text="Be the first to follow this user"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

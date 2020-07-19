@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">K171HanuDribbble</string>
+    <string name="followersStr"> <b> 0 </b>followers</string>
+    <string name="followingStr"> <b> 0 </b>following</string>
+    <string name="projectStr"> <b> 0 </b>projects</string>
 </resources>
