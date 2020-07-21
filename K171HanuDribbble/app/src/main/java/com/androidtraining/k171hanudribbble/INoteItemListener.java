@@ -1,7 +1,7 @@
 package com.androidtraining.k171hanudribbble;
 
-import android.view.View;
+import android.widget.ImageView;
 
 public interface INoteItemListener {
-    void onItemClick(View view, int position);
+    void onItemClick(ImageView view, int position);
 }
