@@ -92,21 +92,18 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
            status.setText(newsFeed.getCaption());
            author.setText(newsFeed.getAuthor());
            date.setText(newsFeed.getDate());
-           if(newsFeed.isHeart()){
-               Animation aniRotate = AnimationUtils.loadAnimation(context,R.anim.rotateanim);
-               heart.startAnimation(aniRotate);
-               heart.setImageResource(R.drawable.heart);
-           }else{
-               Animation aniRotate = AnimationUtils.loadAnimation(context,R.anim.rotateanim);
-               heart.startAnimation(aniRotate);
-               heart.setImageResource(R.drawable.pinkheart);
-           }
+            if(newsFeed.isHeart()){
+                heart.setImageResource(R.drawable.pinkheart);
+            }
+            else{
+                heart.setImageResource(R.drawable.heart);
+            }
         }
 
         @Override
         public void onClick(View v) {
             if(v.getId() == heart.getId()){
-                iFeedWeakReference.get().ItemListener(getAdapterPosition());
+                iFeedWeakReference.get().ItemListener(getAdapterPosition(),heart);
             }
             }
         }

@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -117,10 +119,20 @@ public class MainActivity extends AppCompatActivity implements IFeed {
 
 
     @Override
-    public void ItemListener(int position) {
-        NewsFeed nf  = feeds.get(position);
-        boolean currentStatus = nf.isHeart();
-        nf.setHeart(!currentStatus);
+    public void ItemListener(int position,ImageView v) {
+        NewsFeed newsFeed  = feeds.get(position);
+        boolean currentStatus = newsFeed.isHeart();
+        if(currentStatus){
+            Animation aniRotate = AnimationUtils.loadAnimation(this,R.anim.rotateanim);
+            v.startAnimation(aniRotate);
+            v.setImageResource(R.drawable.heart);
+            newsFeed.setHeart(!currentStatus);
+        }else {
+            Animation aniRotate = AnimationUtils.loadAnimation(this, R.anim.rotateanim);
+            v.startAnimation(aniRotate);
+            v.setImageResource(R.drawable.pinkheart);
+            newsFeed.setHeart(!currentStatus);
+        }
 
     }
 
