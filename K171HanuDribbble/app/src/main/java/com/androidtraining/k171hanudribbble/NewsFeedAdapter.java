@@ -8,27 +8,29 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import Model.NewsFeed;
 import de.hdodenhof.circleimageview.CircleImageView;
 import listener.IFeed;
 
-public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFeedHolder> {
+public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFeedHolder>  {
    private ArrayList<NewsFeed> newsFeeds;
     private Context context;
-    private IFeed itemListener;
+    private IFeed iFeed;
 
-    public NewsFeedAdapter(ArrayList<NewsFeed> newsFeeds, Context context, IFeed itemListener) {
+    public NewsFeedAdapter(ArrayList<NewsFeed> newsFeeds, Context context, IFeed iFeed) {
         this.newsFeeds = newsFeeds;
         this.context = context;
-        this.itemListener = itemListener;
+        this.iFeed = iFeed;
     }
 
     @NonNull
@@ -37,7 +39,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
     public NewsFeedHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.feed_item,parent,false);
-        return new NewsFeedHolder(itemView);
+        return new NewsFeedHolder(itemView,iFeed);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
     public int getItemCount() {
         return newsFeeds.size();
     }
-    public class NewsFeedHolder extends RecyclerView.ViewHolder  {
+    public class NewsFeedHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         CircleImageView avatar;
         TextView status;
@@ -63,7 +65,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
         TextView seenNo;
         ImageView commentic;
         ImageView seenic;
-        public NewsFeedHolder(@NonNull View itemView) {
+        WeakReference<IFeed> iFeedWeakReference;
+        public NewsFeedHolder(@NonNull View itemView, IFeed ifeed) {
             super(itemView);
             status = (TextView) itemView.findViewById(R.id.status) ;
             imageView = (ImageView) itemView.findViewById(R.id.image);
@@ -76,14 +79,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
             commentic = (ImageView) itemView.findViewById(R.id.commentic);
             seenic = (ImageView) itemView.findViewById(R.id.seenic);
             heart = (ImageView) itemView.findViewById(R.id.heartic);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        if(itemListener!=null){
-                            itemListener.ItemListener(v,getAdapterPosition());
-                        }
-                }
-            });
+            heart.setOnClickListener(this);
+            iFeedWeakReference = new WeakReference<>(ifeed);
+
         }
         public void bindData(NewsFeed newsFeed){
             seenNo.setText(String.valueOf(newsFeed.getSeenNo()));
@@ -104,5 +102,13 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
                heart.setImageResource(R.drawable.pinkheart);
            }
         }
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == heart.getId()){
+                iFeedWeakReference.get().ItemListener(getAdapterPosition());
+            }
+            }
+        }
     }
-}
+

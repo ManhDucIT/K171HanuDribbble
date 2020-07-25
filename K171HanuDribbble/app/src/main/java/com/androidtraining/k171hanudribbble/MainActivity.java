@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -114,12 +115,13 @@ public class MainActivity extends AppCompatActivity implements IFeed {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void ItemListener(View view, int position) {
-        NewsFeed nf = feeds.get(position);
+    public void ItemListener(int position) {
+        NewsFeed nf  = feeds.get(position);
         boolean currentStatus = nf.isHeart();
         nf.setHeart(!currentStatus);
-        feedAdapter.notifyItemChanged(position);
+
     }
 
     @Override
