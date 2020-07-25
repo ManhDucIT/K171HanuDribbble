@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,14 +18,17 @@ import java.util.ArrayList;
 
 import Model.NewsFeed;
 import de.hdodenhof.circleimageview.CircleImageView;
+import listener.IFeed;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFeedHolder> {
    private ArrayList<NewsFeed> newsFeeds;
     private Context context;
+    private IFeed itemListener;
 
-    public NewsFeedAdapter(ArrayList<NewsFeed> newsFeeds, Context context) {
+    public NewsFeedAdapter(ArrayList<NewsFeed> newsFeeds, Context context, IFeed itemListener) {
         this.newsFeeds = newsFeeds;
         this.context = context;
+        this.itemListener = itemListener;
     }
 
     @NonNull
@@ -36,31 +41,24 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsFeedHolder holder, int position) {
-        NewsFeed newsFeed = newsFeeds.get(position);
-        holder.seenNo.setText(String.valueOf(newsFeed.getSeenNo()));
-        holder.heartNo.setText(String.valueOf(newsFeed.getLikeNo()));
-        holder.avatar.setImageResource(newsFeed.getAvatar());
-        holder.imageView.setImageResource(newsFeed.getImage());
-        holder.commentNo.setText(String.valueOf(newsFeed.getCommentNo()));
-        holder.status.setText(newsFeed.getCaption());
-        holder.author.setText(newsFeed.getAuthor());
-        holder.date.setText(newsFeed.getDate());
+    public void onBindViewHolder(@NonNull final NewsFeedHolder holder, int position) {
+        final NewsFeed newsFeed = newsFeeds.get(position);
+        holder.bindData(newsFeed);
     }
-
 
 
     @Override
     public int getItemCount() {
         return newsFeeds.size();
     }
-    public class NewsFeedHolder extends RecyclerView.ViewHolder{
+    public class NewsFeedHolder extends RecyclerView.ViewHolder  {
         ImageView imageView;
         CircleImageView avatar;
         TextView status;
         TextView author;
         TextView date;
         TextView heartNo;
+        ImageView heart;
         TextView commentNo;
         TextView seenNo;
         ImageView commentic;
@@ -77,6 +75,34 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
             seenNo = (TextView) itemView.findViewById(R.id.seenNo);
             commentic = (ImageView) itemView.findViewById(R.id.commentic);
             seenic = (ImageView) itemView.findViewById(R.id.seenic);
+            heart = (ImageView) itemView.findViewById(R.id.heartic);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        if(itemListener!=null){
+                            itemListener.ItemListener(v,getAdapterPosition());
+                        }
+                }
+            });
+        }
+        public void bindData(NewsFeed newsFeed){
+            seenNo.setText(String.valueOf(newsFeed.getSeenNo()));
+            heartNo.setText(String.valueOf(newsFeed.getLikeNo()));
+           avatar.setImageResource(newsFeed.getAvatar());
+            imageView.setImageResource(newsFeed.getImage());
+           commentNo.setText(String.valueOf(newsFeed.getCommentNo()));
+           status.setText(newsFeed.getCaption());
+           author.setText(newsFeed.getAuthor());
+           date.setText(newsFeed.getDate());
+           if(newsFeed.isHeart()){
+               Animation aniRotate = AnimationUtils.loadAnimation(context,R.anim.rotateanim);
+               heart.startAnimation(aniRotate);
+               heart.setImageResource(R.drawable.heart);
+           }else{
+               Animation aniRotate = AnimationUtils.loadAnimation(context,R.anim.rotateanim);
+               heart.startAnimation(aniRotate);
+               heart.setImageResource(R.drawable.pinkheart);
+           }
         }
     }
 }

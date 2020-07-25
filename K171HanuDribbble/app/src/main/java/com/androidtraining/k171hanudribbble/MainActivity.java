@@ -21,15 +21,19 @@ import android.widget.RelativeLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import Model.NewsFeed;
+import listener.IFeed;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IFeed {
     RecyclerView rs;
     Button followers;
     Button following;
     Button projects_btn;
     Toolbar toolbar;
+    ArrayList<NewsFeed> feeds;
+    NewsFeedAdapter feedAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         followers.setOnClickListener(new View.OnClickListener() {
@@ -75,18 +79,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         rs = findViewById(R.id.newsfeedsHolder);
-        ArrayList<NewsFeed> feeds = new ArrayList<NewsFeed>();
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,true,3,4,2));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
-        NewsFeedAdapter feedAdapter = new NewsFeedAdapter(feeds,this);
-        rs.setLayoutManager(linearLayoutManager);
+         feeds = new ArrayList<NewsFeed>();
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
+        feedAdapter = new NewsFeedAdapter(feeds,this,this);
         rs.setAdapter(feedAdapter);
+        rs.setHasFixedSize(false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
+        rs.setLayoutManager(linearLayoutManager);
+
     }
 
     @Override
@@ -103,9 +109,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent send = new Intent(Intent.ACTION_SEND);
                 send.setType("text/plain");
                 startActivity(send);
-
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ItemListener(View view, int position) {
+        NewsFeed nf = feeds.get(position);
+        boolean currentStatus = nf.isHeart();
+        nf.setHeart(!currentStatus);
+        feedAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

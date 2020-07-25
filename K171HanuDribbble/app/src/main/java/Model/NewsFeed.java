@@ -6,21 +6,29 @@ public class NewsFeed {
     private String author;
     private String date;
     private int image;
-    private boolean like;
     private int likeNo;
     private int commentNo;
     private int seenNo;
+    private boolean heart;
 
-    public NewsFeed(int avatar, String caption, String author, String date, int image,boolean like,int likeNo, int commentNo, int seenNo) {
+    public boolean isHeart() {
+        return heart;
+    }
+
+    public void setHeart(boolean heart) {
+        this.heart = heart;
+    }
+
+    public NewsFeed(int avatar, String caption, String author, String date, int image, int likeNo, int commentNo, int seenNo, boolean heart) {
         this.avatar = avatar;
         this.caption = caption;
         this.author = author;
         this.date = date;
         this.image = image;
-        this.like = like;
         this.likeNo = likeNo;
         this.commentNo = commentNo;
         this.seenNo = seenNo;
+        this.heart = heart;
     }
     public NewsFeed(){
 
@@ -66,13 +74,6 @@ public class NewsFeed {
         this.image = image;
     }
 
-    public boolean isLike() {
-        return like;
-    }
-
-    public void setLike(boolean like) {
-        this.like = like;
-    }
 
     public int getLikeNo() {
         return likeNo;
