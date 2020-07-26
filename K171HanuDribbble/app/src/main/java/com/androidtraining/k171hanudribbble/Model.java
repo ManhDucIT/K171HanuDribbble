@@ -3,11 +3,21 @@ package com.androidtraining.k171hanudribbble;
 public class Model {
     private String tvName, tvTime, tvContent ;
     private int imgAva;
+    private boolean isLiked;
 
-    public Model(String tvName, String tvTime, String tvContent) {
+    public Model(String tvName, String tvTime, String tvContent, boolean isLiked) {
         this.tvName = tvName;
         this.tvTime = tvTime;
         this.tvContent = tvContent;
+        this.isLiked = isLiked;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     public String getTvName() {

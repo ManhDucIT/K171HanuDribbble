@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
+    android:id="@+id/tvItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,7 @@
 
         >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgAva"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -31,7 +32,7 @@
             android:layout_width="200dp"
             android:layout_height="29dp"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:text="Phung Minh Nguyet"
             android:textColor="#000"
             android:textSize="20dp"
@@ -54,7 +55,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
             android:layout_toEndOf="@id/tvName"
             android:src="@drawable/heart"
