@@ -8,7 +8,7 @@ public class Data {
     boolean isLiked;
     double numberOfComment;
     double numberOfViewer;
-    public Data(String username, String text, int avatar,int image, boolean isLiked, double numberOfComment, double numberOfViewer){
+    public Data(String username, String text,int avatar, int image, boolean isLiked, double numberOfComment, double numberOfViewer){
         this.username = username;
         this.text = text;
         this.avatar = avatar;
