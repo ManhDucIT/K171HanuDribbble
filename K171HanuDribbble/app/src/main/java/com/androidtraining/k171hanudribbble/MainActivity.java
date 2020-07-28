@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,8 +29,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import DAO.PostDAO;
 import Model.NewsFeed;
 import listener.IFeed;
+import listener.ILoadMore;
 
 public class MainActivity extends AppCompatActivity implements IFeed {
     RecyclerView rs;
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements IFeed {
         followers = findViewById(R.id.follwer_btn);
         following = findViewById(R.id.following_btn);
         projects_btn = findViewById(R.id.projects_btn);
-
+        rs = (RecyclerView)findViewById(R.id.newsfeedsHolder);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -81,22 +86,39 @@ public class MainActivity extends AppCompatActivity implements IFeed {
             }
         });
 
-        rs = findViewById(R.id.newsfeedsHolder);
-         feeds = new ArrayList<NewsFeed>();
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feeds.add(new NewsFeed(R.drawable.avatar,"Hello các anh em thiện lành lại là tôi đây các ông ơi","PhucNguyen",",2 thg 7,2020",R.drawable.cou,3,4,2,true));
-        feedAdapter = new NewsFeedAdapter(feeds,this,this);
-        rs.setAdapter(feedAdapter);
-        rs.setHasFixedSize(false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
+        final PostDAO pD = new PostDAO();
+        feeds = pD.getAllNewsFeed();
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
         rs.setLayoutManager(linearLayoutManager);
+        feedAdapter = new NewsFeedAdapter(feeds, this, this);
+        rs.setAdapter(feedAdapter);
+        rs.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("scroll", "scroll");
+                if(linearLayoutManager.findLastVisibleItemPosition() == feeds.size()-1 && feeds.get(feeds.size()-1)!= null){
+                    Log.d("wait", "scroll");
+                    feeds.add(null);
+                    feedAdapter.notifyItemInserted(feeds.size()-1);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            feeds.remove(feeds.size()-1);
+                            feedAdapter.notifyItemRemoved(feeds.size());
+                           feeds.addAll(pD.fetchData());
+                            feedAdapter.notifyDataSetChanged();
+                        }
+                    },5000);
+
+                }
+            }
+
+        });
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements IFeed {
             v.setImageResource(R.drawable.pinkheart);
             newsFeed.setHeart(!currentStatus);
         }
-
     }
 
     @Override

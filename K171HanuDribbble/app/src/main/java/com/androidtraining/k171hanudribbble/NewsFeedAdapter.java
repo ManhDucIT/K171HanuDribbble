@@ -7,11 +7,14 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
 import org.w3c.dom.Text;
 
@@ -21,13 +24,22 @@ import java.util.ArrayList;
 import Model.NewsFeed;
 import de.hdodenhof.circleimageview.CircleImageView;
 import listener.IFeed;
+import listener.ILoadMore;
 
-public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFeedHolder>  {
+public class NewsFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
    private ArrayList<NewsFeed> newsFeeds;
     private Context context;
     private IFeed iFeed;
+    private int VIEW_TYPE_ITEM = 0;
+    private int VIEW_TYPE_PROGRESS = 1;
+    private ILoadMore iLoadMore;
+    boolean isLoading;
+    private int visibleThreshold =5;
+    private int lastItem;
+    private int totalCount;
+    private RecyclerView recyclerView;
 
-    public NewsFeedAdapter(ArrayList<NewsFeed> newsFeeds, Context context, IFeed iFeed) {
+    public NewsFeedAdapter(ArrayList<NewsFeed> newsFeeds, final Context context, IFeed iFeed) {
         this.newsFeeds = newsFeeds;
         this.context = context;
         this.iFeed = iFeed;
@@ -36,18 +48,33 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
     @NonNull
     @Override
 
-    public NewsFeedHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View itemView = layoutInflater.inflate(R.layout.feed_item,parent,false);
-        return new NewsFeedHolder(itemView,iFeed);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == VIEW_TYPE_ITEM) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View itemView = layoutInflater.inflate(R.layout.feed_item, parent, false);
+            return new NewsFeedHolder(itemView, iFeed);
+        }else if(viewType == VIEW_TYPE_PROGRESS) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View itemView = layoutInflater.inflate(R.layout.item_loading, parent, false);
+            return new LoadingHolder(itemView);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NewsFeedHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final NewsFeed newsFeed = newsFeeds.get(position);
-        holder.bindData(newsFeed);
+        if(holder instanceof NewsFeedHolder) {
+            ((NewsFeedHolder) holder).bindData(newsFeed);
+        }else if(holder instanceof  LoadingHolder){
+            ((LoadingHolder) holder).progressBar.setIndeterminate(true);
+        }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return newsFeeds.get(position) == null ? VIEW_TYPE_PROGRESS:VIEW_TYPE_ITEM;
+    }
 
     @Override
     public int getItemCount() {
@@ -105,6 +132,13 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
             if(v.getId() == heart.getId()){
                 iFeedWeakReference.get().ItemListener(getAdapterPosition(),heart);
             }
+            }
+        }
+        public class LoadingHolder extends RecyclerView.ViewHolder{
+            ProgressBar progressBar;
+            public LoadingHolder(@NonNull View itemView) {
+                super(itemView);
+                progressBar = (ProgressBar)itemView.findViewById(R.id.progressBar);
             }
         }
     }
