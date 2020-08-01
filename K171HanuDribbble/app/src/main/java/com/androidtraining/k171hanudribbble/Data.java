@@ -8,12 +8,14 @@ public class Data {
     boolean isLiked;
     double numberOfComment;
     double numberOfViewer;
-    public Data(String username, String text,int avatar, int image, boolean isLiked, double numberOfComment, double numberOfViewer){
+    double number_of_like;
+    public Data(String username, String text,int avatar, int image, boolean isLiked, double number_of_like, double numberOfComment, double numberOfViewer){
         this.username = username;
         this.text = text;
         this.avatar = avatar;
         this.image = image;
         this.isLiked = isLiked;
+        this.number_of_like = number_of_like;
         this.numberOfComment = numberOfComment;
         this.numberOfViewer = numberOfViewer;
     }
@@ -65,6 +67,13 @@ public class Data {
         this.numberOfViewer = numberOfViewer;
     }
 
+    public double getNumber_of_like() {
+        return number_of_like;
+    }
+
+    public void setNumber_of_like(double number_of_like) {
+        this.number_of_like = number_of_like;
+    }
 }
 
 

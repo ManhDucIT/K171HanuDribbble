@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -84,7 +85,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView iv_image;
         ImageView iv_avatar;
         ImageView iv_heart;
-
+        TextView tv_like;
         public MyViewHolder(@NonNull View itemView, final IEventListener event) {
             super(itemView);
             tv_username = itemView.findViewById(R.id.tv_username);
@@ -92,7 +93,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             iv_image= itemView.findViewById(R.id.iv_image);
             iv_avatar = itemView.findViewById(R.id.iv_avt);
             iv_heart = itemView.findViewById(R.id.iv_heart);
-
+            tv_like = itemView.findViewById(R.id.tv_like);
             iv_heart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -105,13 +106,18 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             String text = data.getText();
             int image = data.getImage();
             int avatar = data.getAvatar();
+            double number_of_like = data.getNumber_of_like();
             tv_username.setText(username);
             tv_text.setText(text);
             iv_image.setImageResource(image);
             iv_avatar.setImageResource(avatar);
+
+            DecimalFormat decimalFormat = new DecimalFormat("0.#");
+            String result = decimalFormat.format(Double.valueOf((number_of_like)));
+            tv_like.setText(String.valueOf(result));
             boolean status = data.isLiked();
             if(status){
-                iv_heart.setColorFilter(Color.RED);
+                iv_heart.setColorFilter(Color.parseColor("#ea4c89") , PorterDuff.Mode.MULTIPLY);
             }
         }
     }

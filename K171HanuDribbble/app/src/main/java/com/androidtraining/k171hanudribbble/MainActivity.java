@@ -23,15 +23,17 @@ public class MainActivity extends AppCompatActivity implements IEventListener {
     RecyclerView recyclerView;
     TextView tv_username;
     TextView tv_text;
+
+    TextView tv_like;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lstData = new ArrayList<Data>();
-        Data data1 = new Data("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", R.drawable.image1, R.drawable.ui_ux,false, 1234, 12);
-        Data data2 = new Data("Coin Wallet - Night Theme", "Nadya Fedrunova for Fireart",R.drawable.life, R.drawable.coin_wallet, true, 234, 23);
-        Data data3 = new Data("Affinity Designer (Big Sur Icon)", "Ariunbold Ankhaa for awsmd", R.drawable.cat, R.drawable.afinity, false, 78,67);
-        Data data4 = new Data( "Analytics Landing Page", "Afterglow", R.drawable.avtuser, R.drawable.analytic, true, 1145, 78);
+        Data data1 = new Data("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", R.drawable.image1, R.drawable.ui_ux,false,134, 1234, 12);
+        Data data2 = new Data("Coin Wallet - Night Theme", "Nadya Fedrunova for Fireart",R.drawable.life, R.drawable.coin_wallet, true, 23456,234, 23);
+        Data data3 = new Data("Affinity Designer (Big Sur Icon)", "Ariunbold Ankhaa for awsmd", R.drawable.cat, R.drawable.afinity, false, 667,78,67);
+        Data data4 = new Data( "Analytics Landing Page", "Afterglow", R.drawable.avtuser, R.drawable.analytic, true,12345,  1145, 78);
         lstData.add(data1);
         lstData.add(data2);
         lstData.add(data3);
@@ -77,23 +79,30 @@ public class MainActivity extends AppCompatActivity implements IEventListener {
                     int currentSize = scrollPosition;
                     int nextLimit = currentSize+2;
                     while (currentSize - 1 < nextLimit) {
-                        lstData.add(new Data("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", R.drawable.image1, R.drawable.ui_ux,false, 1234, 12));
+                        lstData.add(new Data("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", R.drawable.image1, R.drawable.ui_ux,false, 567, 1234, 12));
                         currentSize++;
                     }
                     System.out.println(currentSize);
                     adapter.notifyDataSetChanged();
                     isLoading = false;
                 }
-            }, 2000);
+            }, 3000);
 
     }
     @Override
     public void onClickIcon(ImageView iv_heart, int position) {
         Data data = lstData.get(position);
         boolean status = data.isLiked;
+        double number_of_like = data.getNumber_of_like();
+        if(!status){
+            number_of_like= number_of_like +1;
+        }else{
+            number_of_like = number_of_like -1;
+        }
 
         data.setLiked(!status);
+        data.setNumber_of_like(number_of_like);
 
-        adapter.notifyItemChanged(position);
+//        adapter.notifyItemChanged(position);
     }
 }
