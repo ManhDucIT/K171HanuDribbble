@@ -94,7 +94,6 @@ public class OptionSignIn extends AppCompatActivity {
         signInFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
             }
 
             @Override
@@ -111,7 +110,7 @@ public class OptionSignIn extends AppCompatActivity {
 
     private void signInGoogle(){
         Intent signIn = gsi.getSignInIntent();
-        startActivity(signIn);
+        startActivityForResult(signIn,RC_SIGN_IN);
     }
 
     @Override
@@ -125,11 +124,9 @@ public class OptionSignIn extends AppCompatActivity {
     }
 
     private void handleResult(Task<GoogleSignInAccount> task){
-        try {
-            GoogleSignInAccount account = task.getResult();
-            updateUI(account);
-        }catch (Exception e){
-            System.err.print(e.toString());
+        if(task.isSuccessful()){
+            Intent a = new Intent(this,profile.class);
+            startActivity(a);
         }
     }
 
