@@ -2,6 +2,8 @@ package com.androidtraining.k171hanudribbble;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
@@ -15,6 +17,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -22,12 +28,10 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0, VIEW_TYPE_LOADING =1;
 
     Activity activity;
-    List<Data> lstData;
+    List<Shot> lstData;
     IEventListener event;
-   int visibleTreshHold = 5;
    Context c;
-   int lastVisibleItem, totalItemCount;
-    public Adapter(Context context, List<Data> lstData, IEventListener event){
+    public Adapter(Context context, List<Shot> lstData, IEventListener event){
         this.c = context;
         this.lstData =lstData;
         this.event = event;
@@ -50,9 +54,13 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyViewHolder) {
-            Data data = lstData.get(position);
+            Shot data = lstData.get(position);
             MyViewHolder viewHolder = (MyViewHolder) holder;
-            viewHolder.bindData(data);
+            try {
+                viewHolder.bindData(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
@@ -80,7 +88,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView tv_username;
+        TextView tv_title;
         TextView tv_text;
         ImageView iv_image;
         ImageView iv_avatar;
@@ -88,7 +96,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_like;
         public MyViewHolder(@NonNull View itemView, final IEventListener event) {
             super(itemView);
-            tv_username = itemView.findViewById(R.id.tv_username);
+            tv_title = itemView.findViewById(R.id.tv_title);
             tv_text = itemView.findViewById(R.id.tv_text);
             iv_image= itemView.findViewById(R.id.iv_image);
             iv_avatar = itemView.findViewById(R.id.iv_avt);
@@ -101,16 +109,12 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         }
-        public void bindData(Data data){
-            String username = data.getUsername();
-            String text = data.getText();
-            int image = data.getImage();
-            int avatar = data.getAvatar();
+        public void bindData(Shot data) throws IOException {
+            tv_title.setText(data.getTitle());
+            String linkImage = data.getHidpi();
+            Picasso.get().load(linkImage).into(iv_image);
+
             double number_of_like = data.getNumber_of_like();
-            tv_username.setText(username);
-            tv_text.setText(text);
-            iv_image.setImageResource(image);
-            iv_avatar.setImageResource(avatar);
 
             DecimalFormat decimalFormat = new DecimalFormat("0.#");
             String result = decimalFormat.format(Double.valueOf((number_of_like)));

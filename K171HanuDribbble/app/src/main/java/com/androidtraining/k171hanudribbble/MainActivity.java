@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -14,14 +16,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements IEventListener {
+public class MainActivity extends AppCompatActivity implements IShotInterfaceClass, IEventListener{
     ILoadmore loadmore;
     boolean isLoading;
-    List<Data> lstData;
+    List<Shot> listData;
     RecyclerView.LayoutManager layoutManager;
     Adapter adapter;
     RecyclerView recyclerView;
-    TextView tv_username;
+    TextView tv_title;
     TextView tv_text;
 
     TextView tv_like;
@@ -29,21 +31,17 @@ public class MainActivity extends AppCompatActivity implements IEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lstData = new ArrayList<Data>();
-        Data data1 = new Data("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", R.drawable.image1, R.drawable.ui_ux,false,134, 1234, 12);
-        Data data2 = new Data("Coin Wallet - Night Theme", "Nadya Fedrunova for Fireart",R.drawable.life, R.drawable.coin_wallet, true, 23456,234, 23);
-        Data data3 = new Data("Affinity Designer (Big Sur Icon)", "Ariunbold Ankhaa for awsmd", R.drawable.cat, R.drawable.afinity, false, 667,78,67);
-        Data data4 = new Data( "Analytics Landing Page", "Afterglow", R.drawable.avtuser, R.drawable.analytic, true,12345,  1145, 78);
-        lstData.add(data1);
-        lstData.add(data2);
-        lstData.add(data3);
         recyclerView = findViewById(R.id.rv);
-        tv_username = findViewById(R.id.tv_username);
+        tv_title = findViewById(R.id.tv_title);
         tv_text = findViewById(R.id.tv_text);
         layoutManager =  new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter= new Adapter(this, lstData, this);
-        recyclerView.setAdapter(adapter);
+        if(isNetworkAvailable()){
+            getUserRequest request = new getUserRequest();
+            request.setRequest("https://api.dribbble.com/v2/user/shots");
+            request.setPage(1);
+            new NetWorkAsynTask(this, this).execute(request);
+        }
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -54,32 +52,42 @@ public class MainActivity extends AppCompatActivity implements IEventListener {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == lstData.size() - 1) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == listData.size() - 1) {
                         loadMore();
                         isLoading = true;
                     }
                 }
             }
         });
+
+    }
+
+
+    private boolean isNetworkAvailable(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public void loadMore(){
 
-            lstData.add(null);
-        lstData.size();
-            adapter.notifyItemInserted(lstData.size() - 1);
+            listData.add(null);
+        listData.size();
+            adapter.notifyItemInserted(listData.size() - 1);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    lstData.remove(lstData.size() - 1);
-                    lstData.size();
-                    int scrollPosition = lstData.size()-3;
+                    listData.remove(listData.size() - 1);
+                    listData.size();
+                    int scrollPosition = listData.size()-3;
                     adapter.notifyItemRemoved(scrollPosition);
                     int currentSize = scrollPosition;
                     int nextLimit = currentSize+2;
                     while (currentSize - 1 < nextLimit) {
-                        lstData.add(new Data("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", R.drawable.image1, R.drawable.ui_ux,false, 567, 1234, 12));
+                        listData.add(new Shot("Furniture Mobile APP UX/UI", "Joharwarwm paperpillar", "https://static.dribbble.com/users/5735828/screenshots/13975284/design.png", false));
                         currentSize++;
                     }
                     System.out.println(currentSize);
@@ -91,18 +99,27 @@ public class MainActivity extends AppCompatActivity implements IEventListener {
     }
     @Override
     public void onClickIcon(ImageView iv_heart, int position) {
-        Data data = lstData.get(position);
-        boolean status = data.isLiked;
-        double number_of_like = data.getNumber_of_like();
+       Shot shot = listData.get(position);
+        boolean status = shot.isLiked;
+        double number_of_like = shot.getNumber_of_like();
         if(!status){
             number_of_like= number_of_like +1;
         }else{
             number_of_like = number_of_like -1;
         }
 
-        data.setLiked(!status);
-        data.setNumber_of_like(number_of_like);
+        shot.setLiked(!status);
+        shot.setNumber_of_like(number_of_like);
 
-//        adapter.notifyItemChanged(position);
+        adapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void loadListShot(List<Shot> listData) {
+        String a="a";
+        recyclerView.setLayoutManager(layoutManager);
+        this.listData = listData;
+        adapter= new Adapter(this, listData, this);
+        recyclerView.setAdapter(adapter);
     }
 }
