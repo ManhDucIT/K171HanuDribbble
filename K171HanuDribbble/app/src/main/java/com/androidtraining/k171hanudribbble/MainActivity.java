@@ -5,63 +5,66 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.androidtraining.k171hanudribbble.R;
-import com.androidtraining.k171hanudribbble.ListViewAdapter;
-import com.androidtraining.k171hanudribbble.Following;
+import com.androidtraining.Adapter.ListViewAdapter;
+import com.androidtraining.Listener.INoteItemListener;
+import com.androidtraining.Models.Shots;
+import com.androidtraining.Models.User;
+import com.androidtraining.Threads.GetRequest;
+import com.androidtraining.Threads.ILoaderProgressListener;
+import com.androidtraining.Threads.ShotsAsyncTask;
+import com.androidtraining.Threads.UserAsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements INoteItemListener {
-    private List<Following> lstFollowing;
+public class MainActivity extends AppCompatActivity implements INoteItemListener, ILoaderProgressListener {
     private RecyclerView rvItem;
     private RecyclerView.LayoutManager rvLayoutManager;
     private ListViewAdapter adapter;
-    boolean isLoading = false;
-
+    private boolean isLoading = false;
+    private List<Shots> shotsList;
+    private List<User> userList;
+    private int count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
-        preparedData();
-        initAdapter();
-        initScrollListener();
+        userList = new ArrayList<>();
+        shotsList = new ArrayList<>();
+//        initScrollListener();
+        loadData(1);
     }
 
-    private void preparedData() {
-        lstFollowing = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            lstFollowing.add(new Following(R.drawable.profile, R.drawable.avatar, "Event Discovery app", "Shahriar Hossain for Prelook Studio, 6 days ago", R.drawable.background, "242", "19", "16.393", "2", false));
-        }
-    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-    private void initAdapter() {
-        rvLayoutManager = new LinearLayoutManager(this);
-        adapter = new ListViewAdapter(this, lstFollowing, this);
-        rvItem.setLayoutManager(rvLayoutManager);
-        rvItem.setAdapter(adapter);
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     private void initScrollListener() {
         rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == lstFollowing.size() - 1) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == shotsList.size() - 1) {
                         loadMore();
                         isLoading = true;
+
                     }
                 }
             }
@@ -69,35 +72,69 @@ public class MainActivity extends AppCompatActivity implements INoteItemListener
     }
 
     private void loadMore() {
-        lstFollowing.add(null);
-        lstFollowing.size();
-        adapter.notifyItemInserted(lstFollowing.size() - 1);
+        shotsList.add(null);
+        adapter.notifyItemInserted(shotsList.size() - 1);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                lstFollowing.remove(lstFollowing.size() - 1);
-                lstFollowing.size();
-                int scrollPosition = lstFollowing.size();
-                adapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + 5;
-                while (currentSize - 1 < nextLimit) {
-                    lstFollowing.add(new Following(R.drawable.profile, R.drawable.avatar, "Event Discovery app", "Shahriar Hossain for Prelook Studio, 6 days ago", R.drawable.background, "242", "19", "16.393", "2", false));
-                    currentSize++;
-                }
-                System.out.println(currentSize);
+                shotsList.remove(shotsList.size() - 1);
+                adapter.notifyItemRemoved(shotsList.size());
+
+//                fetchData();
                 adapter.notifyDataSetChanged();
                 isLoading = false;
             }
         }, 2000);
     }
 
+
+    private void loadData(int page) {
+        if (isNetworkAvailable()) {
+            GetRequest requestShots = new GetRequest();
+            requestShots.setUrl("https://api.dribbble.com/v2/user/shots");
+            requestShots.setPage(page);
+            new ShotsAsyncTask(MainActivity.this).execute(requestShots);
+            GetRequest requestUser = new GetRequest();
+            requestUser.setUrl("https://api.dribbble.com/v2/user");
+            new UserAsyncTask(MainActivity.this).execute(requestUser);
+        } else {
+            Toast.makeText(MainActivity.this, "Please connect to internet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
-    public void onItemClick(ImageView view, int position) {
-        Following follow = lstFollowing.get(position);
-        boolean status = follow.isLiked();
-        follow.setLiked(!status);
-        adapter.notifyItemChanged(position);
+    public void onItemClick(ImageView view, TextView textView, int position) {
+        Shots shots = shotsList.get(position);
+        boolean status = shots.isLiked();
+        shots.setLiked(!status);
+        if (status) {
+            Animation aniRotateClk = AnimationUtils.loadAnimation(this, R.anim.clock_wise);
+            view.setColorFilter(Color.parseColor("#9da3a5"));
+            view.startAnimation(aniRotateClk);
+            textView.setTextColor(Color.parseColor("#9da3a5"));
+            shots.setLiked(!status);
+        } else {
+            Animation aniRotateClk = AnimationUtils.loadAnimation(this, R.anim.anti_clockwise);
+            view.setColorFilter(Color.parseColor("#EA4C89"));
+            view.startAnimation(aniRotateClk);
+            textView.setTextColor(Color.parseColor("#EA4C89"));
+            shots.setLiked(!status);
+        }
+    }
+
+    @Override
+    public void publishShotsProgress(List<Shots> lstShots) {
+        shotsList = lstShots;
+    }
+
+    @Override
+    public void publishUserProgress(List<User> lstUser) {
+        userList = lstUser;
+        System.out.println(shotsList);
+        rvLayoutManager = new LinearLayoutManager(this);
+        adapter = new ListViewAdapter(this, shotsList, lstUser, this);
+        rvItem.setLayoutManager(rvLayoutManager);
+        rvItem.setAdapter(adapter);
     }
 }

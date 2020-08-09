@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="480dp"
+    android:layout_height="450dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,19 +17,9 @@
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/profile"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/cmImage"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:src="@drawable/avatar"
-            app:civ_border_color="#ffffff"
-            app:civ_border_width="2dp"
-            app:layout_constraintBottom_toBottomOf="@id/profile_image"
-            app:layout_constraintRight_toRightOf="@id/profile_image" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -42,23 +31,36 @@
             android:textColor="#333333"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/profile_image"
-            app:layout_constraintTop_toTopOf="@id/profile_image" />
+            card_view:layout_constraintLeft_toRightOf="@id/profile_image"
+            card_view:layout_constraintTop_toTopOf="@id/profile_image" />
 
         <TextView
-            android:id="@+id/tvDescription"
+            android:id="@+id/tvUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="20dp"
-            android:text="Shahriar Hossain for Prelook Studio, 6 days ago"
+            android:text="MUTI"
+            android:textColor="#3a8bbb"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            card_view:layout_constrainedWidth="true"
+            card_view:layout_constraintHorizontal_bias="0"
+            card_view:layout_constraintLeft_toRightOf="@id/profile_image"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text=", 6 days ago"
             android:textColor="#9da3a5"
             android:textSize="16sp"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@id/profile_image"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            card_view:layout_constraintStart_toEndOf="@id/tvUser" />
 
         <ImageView
             android:id="@+id/ivBackground"
@@ -66,10 +68,9 @@
             android:layout_height="320dp"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/background"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/tvUser" />
 
         <ImageView
             android:id="@+id/ivHeart"
@@ -78,9 +79,9 @@
             android:layout_marginStart="20dp"
             android:src="@drawable/heart"
             android:tint="#9da3a5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <TextView
             android:id="@+id/tvHeart"
@@ -92,9 +93,9 @@
             android:textColor="#9da3a5"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/ivHeart"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@id/ivHeart"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <ImageView
             android:id="@+id/ivComment"
@@ -103,9 +104,9 @@
             android:layout_marginStart="20dp"
             android:src="@drawable/comment"
             android:tint="#9da3a5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/tvHeart"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@id/tvHeart"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <TextView
             android:id="@+id/tvComment"
@@ -117,9 +118,9 @@
             android:textColor="#9da3a5"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/ivComment"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@id/ivComment"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <ImageView
             android:id="@+id/ivView"
@@ -128,9 +129,9 @@
             android:layout_marginStart="20dp"
             android:src="@drawable/eye"
             android:tint="#9da3a5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/tvComment"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@id/tvComment"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <TextView
             android:id="@+id/tvView"
@@ -142,9 +143,9 @@
             android:textColor="#9da3a5"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/ivView"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@id/ivView"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <ImageView
             android:id="@+id/ivAttach"
@@ -153,9 +154,9 @@
             android:layout_marginEnd="18dp"
             android:src="@drawable/attach"
             android:tint="#9da3a5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="@id/tvAttach"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintRight_toRightOf="@id/tvAttach"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
 
         <TextView
             android:id="@+id/tvAttach"
@@ -167,9 +168,9 @@
             android:textColor="#9da3a5"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivBackground" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/ivBackground" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

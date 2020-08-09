@@ -1,37 +1,43 @@
-package com.androidtraining.k171hanudribbble;
+package com.androidtraining.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidtraining.k171hanudribbble.Following;
+import com.androidtraining.Listener.INoteItemListener;
+import com.androidtraining.Models.Shots;
+import com.androidtraining.Models.User;
+import com.androidtraining.Threads.LoadImage;
+import com.androidtraining.k171hanudribbble.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private List<Following> lstFollowing;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private INoteItemListener eventListener;
+    private List<User> lstUser;
+    private List<Shots> lstShots;
 
-    public ListViewAdapter(Context context, List<Following> lstFollowing, INoteItemListener eventListener) {
+    public ListViewAdapter(Context context, List<Shots> lstShots, List<User> lstUser, INoteItemListener eventListener) {
         this.context = context;
-        this.lstFollowing = lstFollowing;
+        this.lstShots = lstShots;
         this.eventListener = eventListener;
+        this.lstUser = lstUser;
     }
 
     @NonNull
@@ -49,9 +55,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            Following following = lstFollowing.get(position);
+            Shots shots = lstShots.get(position);
+            User user = lstUser.get(0);
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
-            viewHolder.bindData(following);
+            viewHolder.bindData(shots, user);
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
@@ -61,21 +68,21 @@ public class ListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return lstFollowing.size();
+        return lstShots.size();
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        return lstFollowing.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return lstShots.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView profile_image;
-        private CircleImageView cmImage;
         private TextView tvTitle;
-        private TextView tvDescription;
+        private TextView tvUser;
+        private TextView tvTime;
         private ImageView ivBackground;
         private TextView tvHeart;
         private TextView tvComment;
@@ -86,10 +93,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public ItemViewHolder(@NonNull View itemView, final INoteItemListener eventListener) {
             super(itemView);
             profile_image = (CircleImageView) itemView.findViewById(R.id.profile_image);
-            cmImage = (CircleImageView) itemView.findViewById(R.id.cmImage);
             ivBackground = (ImageView) itemView.findViewById(R.id.ivBackground);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
+            tvUser = (TextView) itemView.findViewById(R.id.tvUser);
+            tvTime = (TextView) itemView.findViewById(R.id.tvTime);
             tvComment = (TextView) itemView.findViewById(R.id.tvComment);
             tvHeart = (TextView) itemView.findViewById(R.id.tvHeart);
             tvView = (TextView) itemView.findViewById(R.id.tvView);
@@ -99,36 +106,38 @@ public class ListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     if (eventListener != null) {
-
-                        eventListener.onItemClick(ivHeart, getAdapterPosition());
+                        eventListener.onItemClick(ivHeart, tvHeart, getAdapterPosition());
                     }
                 }
             });
         }
 
-        public void bindData(Following follow) {
-            profile_image.setImageResource(follow.getProfileImage());
-            cmImage.setImageResource(follow.getIndustryImage());
-            ivBackground.setImageResource(follow.getBackgroundImage());
-            tvTitle.setText(follow.getTitle());
-            tvDescription.setText(follow.getDescription());
-            tvComment.setText(follow.getCommentCountNum());
-            tvHeart.setText(follow.getHeartCountNum());
-            tvView.setText(follow.getViewCount());
-            tvAttach.setText(follow.getShareCount());
-            boolean status = follow.isLiked();
-            if(status){
-                Animation aniRotateClk = AnimationUtils.loadAnimation(context,R.anim.anti_clockwise);
-                ivHeart.setColorFilter(Color.parseColor("#EA4C89"));
-                ivHeart.startAnimation(aniRotateClk);
-                tvHeart.setTextColor(Color.parseColor("#EA4C89"));
-            } else {
-                Animation aniRotateClk = AnimationUtils.loadAnimation(context,R.anim.clock_wise);
-                ivHeart.setColorFilter(Color.parseColor("#9da3a5"));
-                ivHeart.startAnimation(aniRotateClk);
-                tvHeart.setTextColor(Color.parseColor("#9da3a5"));
-            }
+        public void bindData(Shots shots, User user) {
 
+            LoadImage avatar = new LoadImage(profile_image);
+            String avatar_url = user.getAvatarUrl();
+            avatar.execute(avatar_url);
+            tvTitle.setText(shots.getTitle());
+            tvUser.setText(user.getName());
+            LoadImage background = new LoadImage(ivBackground);
+            String images = shots.getImages().getHidpi();
+            background.execute(images);
+            CharSequence time = convertTime(shots.getPublishedAt());
+            tvTime.setText(", "+ time);
+        }
+
+        private CharSequence convertTime(String time){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+            CharSequence ago = null;
+            try {
+                long timePublishAt = sdf.parse(time).getTime();
+                long now = System.currentTimeMillis();
+                ago = DateUtils.getRelativeTimeSpanString(timePublishAt, now, DateUtils.MINUTE_IN_MILLIS);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return ago;
         }
     }
 
@@ -140,4 +149,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }
+
+
+
 }
