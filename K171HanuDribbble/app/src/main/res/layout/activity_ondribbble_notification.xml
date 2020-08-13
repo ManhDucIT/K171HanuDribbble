@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_onDribbble_notification_screen"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
+        app:title="Notifications on Dribbble"
+        app:titleTextColor="@color/Dr_white"></androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/backgroundAppColor">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="18dp"
+                android:text="Choose which notifications to see while in the app or on the website."
+                android:textColor="?attr/secondaryTextColor"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+
+            <LinearLayout
+                android:id="@+id/notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/containerColor"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="18dp"
+                    android:paddingRight="18dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="FILTERS"
+                        android:textColor="@color/Dr_pink"
+                        android:textSize="16sp"
+                        android:textStyle="bold"></TextView>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_baseline_contact_support_24"
+                        android:tint="@color/Dr_grey"></ImageView>
+                </LinearLayout>
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/buckets_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Buckets"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/buckets_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/comments_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Comments"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/comments_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/comment_likes_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Comment Likes"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/comment_likes_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/followers_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Followers"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/followers_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/likes_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Likes"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/likes_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/mentions_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Mentions"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/mentions_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/rebounds_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Rebounds"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/rebounds_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+
+                <!--            <View-->
+                <!--                style="@style/Divider"-->
+                <!--                android:layout_marginLeft="18dp"-->
+                <!--                android:layout_marginRight="18dp"></View>-->
+
+                <!--            <LinearLayout-->
+                <!--                android:id="@+id/other_option"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@color/Dr_white"-->
+                <!--                android:padding="18dp">-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="left|center"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Other"-->
+                <!--                    android:textColor="@color/Dr_black"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"></TextView>-->
+
+                <!--                <androidx.appcompat.widget.SwitchCompat-->
+                <!--                    android:id="@+id/other_switch"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"></androidx.appcompat.widget.SwitchCompat>-->
+                <!--            </LinearLayout>-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lst_notifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/setting_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?attr/containerColor"
+                android:elevation="5dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notifications">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="FROM..."
+                    android:textColor="@color/Dr_pink"
+                    android:textSize="16sp"
+                    android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:id="@+id/from_everyone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_click_animation"
+                    android:orientation="horizontal"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Everyone"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"></TextView>
+
+                    <RadioButton
+                        android:id="@+id/from_everyone_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:checked="true"></RadioButton>
+
+                </LinearLayout>
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"></View>
+
+                <LinearLayout
+                    android:id="@+id/from_playersonly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_click_animation"
+                    android:orientation="horizontal"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Players only"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"></TextView>
+
+                    <RadioButton
+                        android:id="@+id/from_playersonly_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></RadioButton>
+                </LinearLayout>
+
+                <View style="@style/Divider"></View>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
+

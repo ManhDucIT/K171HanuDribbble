@@ -1,11 +1,33 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/Dr_black</item>
+        <item name="colorPrimaryDark">@color/Dr_black</item>
+        <item name="colorAccent">@color/Dr_pink</item>
+        <item name="primaryTextColor">@color/Dr_black</item>
+        <item name="secondaryTextColor">@color/Dr_grey</item>
+        <item name="tertiaryTextColor">@color/Dr_dark_grey</item>
+        <item name="containerColor">@color/Dr_white</item>
+        <item name="backgroundAppColor">@color/Dr_background_theme</item>
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/secondary_Drblack</item>
+        <item name="colorPrimaryDark">@color/secondary_Drblack</item>
+        <item name="colorAccent">@color/Dr_pink</item>
+        <item name="primaryTextColor">@color/Dr_white</item>
+        <item name="secondaryTextColor">@color/Dr_grey</item>
+        <item name="tertiaryTextColor">@color/Dr_dark_grey</item>
+        <item name="containerColor">@color/secondary_Drblack</item>
+        <item name="backgroundAppColor">@color/Dr_black</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.3dp</item>
+        <item name="android:background">@color/Dr_dark_grey</item>
     </style>
 
 </resources>
