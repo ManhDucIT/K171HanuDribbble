@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundAppColor">
+
+        <ImageView
+            android:id="@+id/close_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:elevation="1dp"
+            android:src="@drawable/ic_outline_close_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/newsposter"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <LinearLayout
+            android:id="@+id/script"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/containerColor"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/poster">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                android:paddingTop="18dp"
+                android:text="New update!"
+                android:textColor="@color/Dr_pink"
+                android:textSize="16sp"
+                android:textStyle="bold"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="18dp"
+                    android:paddingBottom="18dp"
+                    android:text="New navigation and overall redesign"
+                    android:textColor="?attr/primaryTextColor"
+                    android:textSize="24dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:text="@string/intro_new_features"
+                    android:textColor="?attr/secondaryTextColor"
+                    android:textSize="16sp"></TextView>
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="18dp"
+                    android:text="Other improvements"
+                    android:textColor="?attr/primaryTextColor"
+                    android:textSize="18dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:text="@string/improvements"
+                    android:textColor="?attr/secondaryTextColor"
+                    android:textSize="16sp"></TextView>
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="18dp"
+                    android:text="Bugfixes"
+                    android:textColor="?attr/primaryTextColor"
+                    android:textSize="18dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:paddingBottom="18dp"
+                    android:text="@string/bugfixes"
+                    android:textColor="?attr/secondaryTextColor"
+                    android:textSize="16sp"></TextView>
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"></View>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/last_sentence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:text="@string/ps"
+            android:textColor="?attr/secondaryTextColor"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/script"></TextView>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="150dp"
+            android:background="@drawable/btn_rate_dribbble"
+            android:clickable="true"
+            android:text="Give 5 stars to Dribbble"
+            android:textAllCaps="false"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/last_sentence"></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

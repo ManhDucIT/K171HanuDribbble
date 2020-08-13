@@ -1,0 +1,8 @@
+
+<resources>
+    <attr name="tertiaryTextColor" format="reference"></attr>
+    <attr name="primaryTextColor" format="reference"></attr>
+    <attr name="secondaryTextColor" format="reference"></attr>
+    <attr name="containerColor" format="reference"></attr>
+    <attr name="backgroundAppColor" format="reference"></attr>
+</resources>

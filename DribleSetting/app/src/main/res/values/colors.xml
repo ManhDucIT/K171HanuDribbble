@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Dr_black">#1C1C1C</color>
+    <color name="Dr_grey">#808080</color>
+    <color name="Dr_pink">#EE5E99</color>
+    <color name="Dr_white">#FAFAFA</color>
+    <color name="Dr_background_theme">#F5F2F2</color>
+    <color name="Dr_light_grey">#D9D9D9</color>
+    <color name="Dr_dark_grey">#5D5C5C</color>
+    //secontheme
+    <color name="secondary_Drblack">#272727</color>
+</resources>

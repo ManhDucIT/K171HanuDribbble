@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">DribleSetting</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <string name="report_message">Summary: - ... Steps to reproduce: - ... Expected results: - ... Actual results: - ... --------------------------------------------------------------- DEVICE INFO App version: 1.5.3-production (1500300) Android version: 11 Manufacturer: Google Phone model: sdk_gphone_x86 (generic_x86_arm) User: phuc3111999 (Prospect) --------------------------------------------------------------- Thanks for filing a bug! ❤️  </string>
+    <string name="report_title">[DRIBBBLE ANDROID] Bug report</string>
+    <string name="report_email">support@dribbble.com</string>
+    <string name="title_activity_setting">SettingActivity</string>
+
+    <string name="gif_auto_play_warning">This feature is unstable and can cause your app to crash occasionally. If you experience lots of crash, please turn off this option.\n\n\nPS: We are currently working on fixing this issue</string>
+
+    <string name="intro_new_features">\n
+        - Introducing a new bottom navigation bar to make it quick and easy to move between Shots, Activity Uploading, and Messages.\n\n
+        - Removed the hamburger menu, you can now access your profile when tapping on your avatar in the top left of the screen.\n\n
+        - Removed the \'Explore\' section, and replaced it with quick filters in the Popular and Recent shots feeds so you can drill into the specific types of Shots you want to explore right from your home screen.\n\n
+        - New sign-in flow: it is now possible to sign in via Google, Twitter and Facebook within the app.\n\n
+        - Redesigned Activity. Shot Details, Search and Upload flow.\n\n
+        - Lots of other Ul improvements were made throughout the whole app.\n\n</string>
+
+    <string name="improvements">\n
+        - The app is now notch-friendly.\n
+        - Simplified the \'add to bucket\' flow. Also, you can now remove a shot from a bucket.\n
+        - Unread messages are now highlighted with a small badge.\n
+        - Activity and Messages screens are now updated right away with incoming notifications and messages.\n
+    </string>
+
+    <string name="bugfixes">\n
+        - Fixed a timezone bug when scheduling a shot.\n
+        - Fixed a bug that prevented prospects from uploading shots.\n
+        - User preference for video sound on/off was not correctly saved.\n
+        - Fixed a crash occurring when following a user.\n
+    </string>
+
+    <string name="ps">\nWe\'re working hard to offer you the best experience possible. If you like the app, don\'t forget to share the love on the Play Store</string>
+
+    <string name="shopLink">https://shop.dribbble.com/</string>
+    <string name="jobLink">https://dribbble.com/jobs</string>
+    <string name="storiesLink">https://dribbble.com/stories/2020/08/11/soft-skills-design-software-cant-replace</string>
+    <string name="twitterLink">https://mobile.twitter.com/Dribbble</string>
+    <string name="instagramLink">https://www.instagram.com/accounts/login/?next=/dribbble/</string>
+    <string name="facebookLink">https://m.facebook.com/dribbble/</string>
+</resources>
